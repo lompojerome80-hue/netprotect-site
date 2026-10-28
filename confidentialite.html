@@ -209,7 +209,7 @@
     <h2><span class="n">9.</span>Sécurité</h2>
     <ul>
       <li>Toutes les communications de l'application se font en <strong>HTTPS</strong>, et
-      l'application <strong>refuse tout trafic en clair</strong>.</li>
+      l'application <strong>n'émet elle-même aucune requête en clair</strong>.</li>
       <li>Les envois de supervision sont <strong>signés</strong> (HMAC-SHA256) et vérifiés par le
       serveur, qui compare les signatures en temps constant.</li>
       <li>Le serveur <strong>refuse tout champ inconnu</strong> dans un signal : une version future de
