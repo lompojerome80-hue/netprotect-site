@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Politique de confidentialité — NetProtect</title>
-<meta name="description" content="Politique de confidentialité de l'application Android NetProtect (Google Play).">
+<meta name="description" content="Politique de confidentialité des applications Android NetProtect, versions Google Play et distribution directe (vente).">
 <style>
   :root{
     --navy:#0b1220; --navy2:#0f172a; --card:#fff; --text:#1a2b3c;
@@ -62,23 +62,24 @@
   <header class="top">
     <span class="brand"><span class="dot"></span>NetProtect</span>
     <h1>Politique de confidentialité</h1>
-    <p class="sub">Application Android NetProtect, distribuée par Google Play.</p>
+    <p class="sub">Applications Android NetProtect — version Google Play et version de vente (hors Google Play).</p>
   </header>
 
   <main>
     <div class="meta">
-      <span><b>Version</b> 3.0</span>
-      <span><b>En vigueur le</b> 28 octobre 2026</span>
-      <span><b>Application</b> NetProtect Mobile — <code>com.netprotect.mobile.play</code></span>
+      <span><b>Version</b> 3.1</span>
+      <span><b>En vigueur le</b> 30 octobre 2026</span>
+      <span><b>Applications</b> NetProtect Mobile — <code>com.netprotect.mobile</code> (vente) et <code>com.netprotect.mobile.play</code> (Google Play)</span>
       <span><b>Langue</b> français</span>
     </div>
 
     <div class="lede">
       <p><strong>L'essentiel.</strong> NetProtect filtre Internet <strong>sur le téléphone</strong>, sans
       compte, sans publicité, sans outil de mesure d'audience, et sans revendre quoi que ce soit à qui
-      que ce soit. Deux choses seulement sortent de l'appareil : le <strong>téléchargement de la liste
-      de blocage</strong>, et — uniquement si vous activez l'option <strong>Supervision</strong> — les
-      informations listées à la section 5.2. Tout le reste reste sur le téléphone.</p>
+      que ce soit. Trois choses seulement sortent de l'appareil : le <strong>téléchargement de la liste
+      de blocage</strong> ; <strong>l'activation de la licence</strong>, une seule fois, dans la version
+      de vente (section 5.1) ; et — uniquement si vous activez l'option <strong>Supervision</strong> —
+      les informations listées à la section 5.3. Aucune donnée de navigation ne part vers un serveur.</p>
     </div>
 
     <h2><span class="n">1.</span>Qui est responsable</h2>
@@ -102,7 +103,7 @@
       <em>local</em> : le trafic du téléphone passe par elle, est analysé <strong>sur l'appareil</strong>,
       puis repart vers Internet. Aucun trafic ne transite par un serveur de notre côté.</li>
       <li><strong>Sites adultes.</strong> Les noms de domaine demandés sont comparés à une liste de
-      blocage embarquée dans l'application, mise à jour selon la section 5.1. La liste est stockée
+      blocage embarquée dans l'application, mise à jour selon la section 5.2. La liste est stockée
       chiffrée (AES) et protégée par une empreinte HMAC-SHA256.</li>
       <li><strong>DNS chiffrés.</strong> Les requêtes DNS chiffrées (DoH, DoT) et le protocole QUIC
       sont coupés, car ils empêchent tout filtrage par nom de domaine.</li>
@@ -126,9 +127,27 @@
     </ul>
 
     <h2><span class="n">5.</span>Ce qui peut sortir de l'appareil</h2>
-    <p>Il n'y a <strong>que deux cas</strong>, tous deux décrits ci-dessous.</p>
+    <p>Il n'y a <strong>que trois cas</strong>, tous décrits ci-dessous. Les deux premiers sont
+    techniques ; le troisième dépend d'une option que vous activez.</p>
 
-    <h3>5.1 Mise à jour de la liste de blocage (automatique, sans donnée personnelle)</h3>
+    <h3>5.1 Activation de la licence (une seule fois, version de vente)</h3>
+    <p>La version publiée sur Google Play ne demande <strong>aucune clé</strong>. La version remise
+    directement par l'éditeur (site de vente) en demande une. Au moment de l'activation — et à ce
+    moment seulement — l'application envoie au serveur de licence :</p>
+    <ul>
+      <li>le <strong>numéro de commande</strong> porté par la clé, et la <strong>signature</strong> de cette clé ;</li>
+      <li>l'<strong>identifiant de l'appareil</strong> fourni par Android (<code>ANDROID_ID</code>), afin de lier la clé à un seul téléphone ;</li>
+      <li>la <strong>date</strong> de la demande.</li>
+    </ul>
+    <p>Le serveur enregistre ces éléments dans une base hébergée chez Cloudflare, et journalise
+    l'<strong>adresse IP publique</strong> de la requête. Ce journal sert à repérer une clé utilisée sur
+    plusieurs téléphones, donc revendue. Aucune donnée de navigation, aucun contact et aucun texte de
+    recherche n'accompagne cet envoi. Une fois la clé liée, l'application ne contacte plus le serveur
+    de licence.</p>
+    <p>Ces données sont conservées tant que la clé reste en service, afin de bloquer une clé revendue.
+    Vous pouvez en demander l'effacement (section 8) ; la clé devient alors inutilisable.</p>
+
+    <h3>5.2 Mise à jour de la liste de blocage (automatique, sans donnée personnelle)</h3>
     <p>Au plus une fois toutes les 24 heures, et seulement au moment où la protection démarre,
     l'application télécharge une liste de domaines depuis un dépôt GitHub public
     (<code>raw.githubusercontent.com</code>, projet StevenBlack). C'est un <strong>téléchargement</strong> :
@@ -136,7 +155,7 @@
     le fichier voit l'adresse IP publique du téléphone. La source utilisée est affichée dans l'écran
     « Règles » de l'application, et peut y être changée.</p>
 
-    <h3>5.2 Supervision parent/enfant (facultative, à votre initiative)</h3>
+    <h3>5.3 Supervision parent/enfant (facultative, à votre initiative)</h3>
     <p>La Supervision est <strong>désactivée par défaut</strong>. Elle ne fonctionne que si le parent
     appaire explicitement les deux téléphones au moyen d'un code affiché sur le téléphone de l'enfant,
     puis recopié sur le téléphone du parent. Ce code crée un identifiant de liaison
@@ -177,8 +196,16 @@
         <tr><td>Accès à l'usage</td><td>Mesurer le temps d'usage par application, pour l'écran de contrôle parental. Cette autorisation s'accorde dans les réglages Android ; elle est sans effet si vous n'utilisez pas la Supervision.</td></tr>
         <tr><td>Liste des applications</td><td>Afficher les applications installées et leurs icônes dans l'écran de contrôle parental.</td></tr>
         <tr><td>Exemption d'optimisation de batterie</td><td>Éviter que le système arrête le filtre. <strong>Facultative.</strong></td></tr>
+        <tr><td>Administration de l'appareil</td><td><strong>Version de vente seulement, facultative.</strong> Empêche la désinstallation de l'application tant que l'administrateur est actif. Se retire à tout moment dans les réglages Android. La version Google Play ne la demande pas.</td></tr>
+        <tr><td>Accessibilité</td><td><strong>Version de vente seulement, facultative.</strong> Sert uniquement à reconnaître l'écran « Localisation » des réglages Android pour le refuser quand le partage de position est actif. Le service ne lit que le nom du paquet et de l'écran : aucun texte, aucun message, aucune frappe.</td></tr>
+        <tr><td>Réglages système (<code>WRITE_SECURE_SETTINGS</code>)</td><td><strong>Version de vente seulement.</strong> Accordée par le vendeur lors de l'installation, jamais par une fenêtre Android. Permet de rallumer la localisation si elle est coupée par un autre chemin. Sans elle, le blocage de l'écran Localisation fonctionne quand même.</td></tr>
+        <tr><td>Alarmes exactes</td><td>Relancer le contrôle de l'état de la protection après un redémarrage ou une longue veille.</td></tr>
       </tbody>
     </table>
+    <p><strong>Différence entre les deux versions.</strong> La version Google Play ne demande ni l'administration
+    de l'appareil, ni l'accessibilité, ni <code>WRITE_SECURE_SETTINGS</code> : elle ne peut donc pas empêcher sa
+    désinstallation ni verrouiller l'écran Localisation. Ces trois autorisations appartiennent à la version de
+    vente, décrite dans cette politique aux sections 5.1 et 6.</p>
 
     <h2><span class="n">7.</span>Ce que nous ne faisons pas</h2>
     <ul>
@@ -191,6 +218,9 @@
 
     <h2><span class="n">8.</span>Combien de temps les données sont conservées</h2>
     <ul>
+      <li><strong>Fiche de licence</strong> (numéro de commande, identifiant d'appareil, date) et
+      <strong>journal des activations</strong> (date, commande, appareil, adresse IP, résultat) :
+      conservés tant que la clé reste en service, puis supprimés sur demande. Version de vente seulement.</li>
       <li><strong>Fiche de l'appareil supervisé</strong> (signal, applications, icônes, domaines bloqués) :
       <strong>30 jours</strong> à compter du dernier envoi, puis effacement automatique.</li>
       <li><strong>Points de position</strong> : <strong>7 jours</strong>.</li>
@@ -217,27 +247,29 @@
       <li>Le mot de passe de protection est haché (PBKDF2, 200 000 itérations) avec un compteur
       anti-essais qui bloque après plusieurs échecs.</li>
       <li>L'application est signée numériquement ; Android refuse d'installer une version modifiée.</li>
+      <li>La clé de licence est vérifiée par <strong>signature RSA</strong> : une clé inventée ou modifiée
+      est rejetée avant tout enregistrement.</li>
     </ul>
     <p class="small">Aucun système n'est parfait : un téléphone déverrouillé, rooté ou équipé d'un
     certificat d'autorité ajouté par un tiers peut être compromis. Nous préférons le dire plutôt que
     de le laisser croire.</p>
 
     <h2><span class="n">10.</span>Où les données sont hébergées</h2>
-    <p>Le serveur de supervision et le téléchargement de la liste reposent sur des prestataires
-    techniques établis <strong>aux États-Unis</strong> : Cloudflare, Inc. (serveur de supervision) et
-    GitHub, Inc. / Microsoft (liste de blocage). Leurs serveurs peuvent donc se trouver en dehors du
-    Burkina Faso, y compris aux États-Unis. Ces prestataires agissent pour notre compte et n'utilisent
-    pas ces données à leurs propres fins.</p>
+    <p>Le serveur de supervision, le serveur de licence et le téléchargement de la liste reposent sur des
+    prestataires techniques établis <strong>aux États-Unis</strong> : Cloudflare, Inc. (supervision et
+    licence) et GitHub, Inc. / Microsoft (liste de blocage). Leurs serveurs peuvent donc se trouver en
+    dehors du Burkina Faso, y compris aux États-Unis. Ces prestataires agissent pour notre compte et
+    n'utilisent pas ces données à leurs propres fins.</p>
 
     <h2><span class="n">11.</span>Vos droits</h2>
     <p>Conformément à la <strong>loi n° 001-2021/AN du 30 mars 2021</strong> portant protection des
     personnes à l'égard du traitement des données à caractère personnel au Burkina Faso, vous disposez
     d'un droit d'information, d'accès, de rectification, d'opposition et d'effacement.</p>
     <ul>
-      <li><strong>Accès :</strong> les données traitées sont exactement celles listées à la section 5.2,
-      et rien d'autre.</li>
+      <li><strong>Accès :</strong> les données traitées sont exactement celles listées aux sections 5.1
+      à 5.3, et rien d'autre.</li>
       <li><strong>Opposition / retrait :</strong> la Supervision est facultative et se coupe en un geste
-      (section 5.2).</li>
+      (section 5.3).</li>
       <li><strong>Réclamation :</strong> vous pouvez saisir la <strong>Commission de l'informatique et
       des libertés (CIL)</strong>, autorité de contrôle burkinabè.</li>
     </ul>
@@ -254,15 +286,18 @@
     nouvelle version sera publiée à cette adresse avant la mise à jour concernée.</p>
 
     <h2><span class="n">14.</span>Version distribuée hors Google Play</h2>
-    <p>La version de l'application remise directement par l'éditeur (hors Google Play) comporte en plus
-    une <strong>activation par clé de licence</strong>, qui transmet au serveur de licence le numéro de
-    commande, la signature de la clé et un identifiant de l'appareil, afin d'empêcher la revente d'une
-    même clé. Cette version fait l'objet d'une note de confidentialité distincte, remise avec la clé.
-    La présente politique couvre la version publiée sur Google Play.</p>
+    <p>La version remise directement par l'éditeur (site de vente, fichier APK) est couverte par la
+    présente politique. Elle ajoute trois traitements absents de la version Google Play : l'<strong>activation
+    par clé de licence</strong> (section 5.1) ; l'<strong>administration de l'appareil</strong>, qui empêche la
+    désinstallation tant qu'elle est active ; et un <strong>service d'accessibilité</strong> qui refuse l'écran
+    « Localisation » des réglages Android lorsque le partage de position est activé (section 6). Elle utilise
+    le même serveur de supervision, avec les mêmes durées de conservation. Aucune publicité, aucun outil de
+    mesure d'audience et aucune revente ne sont ajoutés.</p>
 
-    <p class="small" style="margin-top:26px">Dernière mise à jour : 28 octobre 2026 — version 3.0.
-    Cette version remplace la note de confidentialité 2.2 et décrit exactement les traitements de la
-    version Google&nbsp;Play (aucune clé de licence, aucune publicité, aucun outil de mesure d'audience).</p>
+    <p class="small" style="margin-top:26px">Dernière mise à jour : 30 octobre 2026 — version 3.1.
+    Cette version remplace la politique 3.0 : elle couvre à la fois la version Google Play et la version
+    de vente, et décrit l'activation par clé, l'administration de l'appareil et le service d'accessibilité
+    propres à la distribution directe.</p>
   </main>
 
   <footer>
